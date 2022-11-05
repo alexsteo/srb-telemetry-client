@@ -2,17 +2,18 @@ import {React, useEffect, useState} from 'react';
 import {Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis} from "recharts";
 import {io} from "socket.io-client";
 import {stopData} from "../api/socketConnection";
-import {dummy} from './basic'
 
 const socket = io("http://localhost:3001");
 
+const json = require('../telemetry-2022-11-04T14-23-23.json')
 export const Graph = () => {
 
-    const [data, setData] = useState(dummy);
+    const [data, setData] = useState(json);
     const [read, setRead] = useState(false);
     const [show, setShow] = useState(true);
 
     console.log(data)
+
 
     useEffect(() => {
 
@@ -62,8 +63,13 @@ export const Graph = () => {
                             <XAxis dataKey="timestamp"/>
                             <Tooltip/>
                             <Legend/>
-                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="gas" stroke="#00ff00"/>*/}
-                            <Line type="monotone" strokeWidth={1} dot={false} dataKey="brakeTemp[0]" stroke="#ff0000"/>
+                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="speedKmh" stroke="#0000ff"/>*/}
+                            <Line type="monotone" strokeWidth={1} dot={false} dataKey="gas" stroke="#ff0000"/>
+                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="brake" stroke="#00ff00"/>*/}
+                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="wheelPressure[0]" stroke="#00ff00"/>*/}
+                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="wheelPressure[1]" stroke="#ff0000"/>*/}
+                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="wheelPressure[2]" stroke="#0000ff"/>*/}
+                            {/*<Line type="monotone" strokeWidth={1} dot={false} dataKey="wheelPressure[3]" stroke="#ff00ff"/>*/}
                         </LineChart>
                     </ResponsiveContainer>}
             </div>
