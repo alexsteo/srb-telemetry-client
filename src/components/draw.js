@@ -1,10 +1,9 @@
 import {React, useState} from 'react';
 import Sketch from "react-p5";
 
-const json = require('../telemetry-2022-11-04T14-23-23.json')
 export const Draw = () => {
 
-    const [data, setData] = useState(json);
+    const [data, setData] = useState([]);
     console.log(data)
 
     const setup = (p5, canvasParentRef) => {

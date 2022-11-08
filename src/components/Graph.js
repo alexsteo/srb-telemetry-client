@@ -5,23 +5,17 @@ import {stopData} from "../api/socketConnection";
 
 const socket = io("http://localhost:3001");
 
-const json = require('../telemetry-2022-11-04T14-23-23.json')
 export const Graph = () => {
 
-    const [data, setData] = useState(json);
+    const [data, setData] = useState([]);
     const [read, setRead] = useState(false);
     const [show, setShow] = useState(true);
 
-    console.log(data)
-
-
     useEffect(() => {
 
-        socket.on('send_acc_data', (currentData) => {
-            if (currentData.speedKmh > 0) {
-                console.log("received")
-                setData(old => [...old, {...currentData, timestamp: Date.now()}])
-            }
+        socket.on('telemetry_data', (currentData) => {
+            console.log('sadas')
+            console.log(currentData)
         });
 
         return () => {
@@ -29,25 +23,9 @@ export const Graph = () => {
         };
     }, []);
 
-    const stopRead = () => {
-        setRead(false);
-        stopData(socket);
-        if (data.length > 0) {
-            setShow(true);
-        }
-        console.log(data)
-    }
-
-    const startRead = () => {
-        setRead(true);
-        socket.emit("req_acc_data");
-    }
-
     return (
         <div>
             <div style={{height: 400}}>
-                <button onClick={startRead}>Start read</button>
-                <button onClick={stopRead}>Stop read</button>
                 {show &&
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
